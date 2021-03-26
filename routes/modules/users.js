@@ -6,20 +6,20 @@ const bcrypt = require('bcryptjs')
 const db = require('../../models')
 const User = db.User
 
-router.get('/users/login', (req, res) => {
+router.get('/login', (req, res) => {
   res.render('login')
 })
 
-router.post('/users/login', passport.authenticate('local', {
+router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/users/login'
 }))
 
-router.get('/users/register', (req, res) => {
+router.get('/register', (req, res) => {
   res.render('register')
 })
 
-router.post('/users/register', (req, res) => {
+router.post('/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body
   User.findOne({ where: { email } })
     .then(user => {
@@ -45,8 +45,9 @@ router.post('/users/register', (req, res) => {
     })
 })
 
-router.get('/users/logout', (req, res) => {
-  res.send('logout')
+router.get('/logout', (req, res) => {
+  req.logOut()
+  res.redirect('/users/login')
 })
 
 module.exports = router
