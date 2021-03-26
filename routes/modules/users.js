@@ -20,6 +20,7 @@ router.get('/register', (req, res) => {
 })
 
 router.post('/register', (req, res) => {
+  console.log(req.body)
   const { name, email, password, confirmPassword } = req.body
   User.findOne({ where: { email } })
     .then(user => {
@@ -46,7 +47,7 @@ router.post('/register', (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
-  req.logOut()
+  req.logout()
   res.redirect('/users/login')
 })
 
